@@ -1,0 +1,160 @@
+﻿<Window x:Class="Example_01.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Example_01"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        Height="550" 
+        Width="955"
+        ResizeMode="NoResize">
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" MinWidth="100" MaxWidth="300"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.ColumnSpan="3"
+              Grid.Row="0">
+            <MenuItem Header="Меню">
+                <MenuItem Header="Сохранить" Click="Save"/>
+                <MenuItem Header="Загрузить" Click="Load"/>
+            </MenuItem>
+        </Menu>
+
+        <GridSplitter Grid.Column="1"
+                      Grid.Row="1"
+                      Width="3"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      BorderBrush="Black"/>
+        <StackPanel Grid.Column="0"
+                    Grid.Row="1">
+            <Border Margin="5"
+                    Height="270"
+                    Padding="5"
+                    BorderThickness="1"
+                    BorderBrush="Aqua"
+                    CornerRadius="5">
+                <TreeView x:Name="treeView"
+                          SelectedItemChanged="TreeView_OnSelectedItemChanged"
+                          Margin="5">
+                    <TreeView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Добавить отдел"
+                                      Click="AddDepartment"/>
+                            <MenuItem Header="Изменить название отдела"
+                                      Click="ChangeNameDepartment"/>
+                            <MenuItem Header="Удалить отдел"
+                                      Click="RemoveDepartment"/>
+                        </ContextMenu>
+                    </TreeView.ContextMenu>
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Departments}">
+                            <TextBlock Text="{Binding Name}"/>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </Border>
+
+
+            <Border Margin="5"
+                    Height="90"
+                    Padding="5"
+                    BorderThickness="1"
+                    BorderBrush="Aqua"
+                    CornerRadius="5">
+
+                <GroupBox Header="Панель работы с датой">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="Количество дней:  "/>
+                            <TextBlock Text="0" x:Name="tbDays"/>
+                        </StackPanel>
+                        <Button Click="NextDay"
+                                Content="Следующий день."/>
+                    </StackPanel>
+                </GroupBox>
+            </Border>
+
+            <Border Margin="5"
+                    Height="100"
+                    Padding="5"
+                    BorderThickness="1"
+                    BorderBrush="Aqua"
+                    CornerRadius="5">
+
+                <GroupBox Header="Выберите организацию">
+                    <StackPanel Margin="0 5">
+                        <TextBlock Text="Список организаций:" 
+                                   Margin="5"/>
+                        <ComboBox x:Name="cbOrganizations" 
+                                  Margin="5"
+                                  SelectionChanged="CbOrganizations_OnSelectionChanged"/>
+                    </StackPanel>
+                </GroupBox>
+            </Border>
+        </StackPanel>
+
+        <Border Grid.Column="2"
+                Grid.Row="1"
+                Margin="5"
+                Padding="5"
+                BorderThickness="1"
+                BorderBrush="Aqua"
+                CornerRadius="5">
+
+            <ListView x:Name="listView"
+                      Margin="5">
+
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Добавить сотрудника"
+                                  Click="AddWorker"/>
+                        <MenuItem Header="Изменить сотрудника"
+                                  Click="ChangeWorker"/>
+                        <MenuItem Header="Удалить сотрудника"
+                                  Click="RemoveWorker"/>
+                        <MenuItem Header="Сортировка по имени"
+                                  Click="SortByFirstName"/>
+                        <MenuItem Header="Сортировка по фамилии"
+                                  Click="SortByLastName"/>
+                        <MenuItem Header="Сортировка по зарплате"
+                                  Click="SortBySalary"/>
+                        <MenuItem Header="Сортировка по полной выплате"
+                                  Click="SortBySum"/>
+                        <MenuItem Header="Сортировка по должности"
+                                  Click="SortByPosition"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="First Name" 
+                                        DisplayMemberBinding="{Binding FirstName}"
+                                        Width="150"/>
+                        <GridViewColumn Header="Second Name"
+                                        DisplayMemberBinding="{Binding LastName}"
+                                        Width="150"/>
+                        <GridViewColumn Header="Salary"
+                                        DisplayMemberBinding="{Binding Salary}"
+                                        Width="100"/>
+                        <GridViewColumn Header="Sum"
+                                        DisplayMemberBinding="{Binding Sum}"
+                                        Width="100"/>
+                        <GridViewColumn Header="Position"
+                                        DisplayMemberBinding="{Binding Position}"
+                                        Width="190"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Border>
+    </Grid>
+</Window>
